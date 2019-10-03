@@ -24,7 +24,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
+        \Auth::provider("repository",function($app,array $config){
+            return new RepositoryUserProvider($app['hash'],$app->make($config['repository']));
+        });
     }
 }
