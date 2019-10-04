@@ -1,19 +1,28 @@
 import VueResource from 'vue-resource'
+
 const APP_URL = process.env.MIX_APP_URL;
 const APP_VERSION = process.env.MIX_APP_VERSION;
+const VUE_APP_RESOURCE = process.env.MIX_APP_RESOURCE;
 
 const resource_dependency = {
+
 }
 
 resource_dependency.install = (Vue,options) => {
 
     Vue.use(VueResource)
     const storage_key = APP_VERSION;
-
-    Vue.http.headers.common['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content')
-    Vue.http.headers.common['Authorization'] = (!localStorage[storage_key]) ? '' : 'Bearer ' + JSON.parse(localStorage[storage_key]).Auth.token
-    //Vue.http.headers.common['Authorization'] = (!sessionStorage[storage_key]) ? '' : 'Bearer ' + JSON.parse(sessionStorage[storage_key]).Auth.token
-    Vue.http.options.root = APP_URL
+    if(VUE_APP_RESOURCE === 'axios'){
+        VueResource.defaults.headers.common['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content')
+        VueResource.defaults.headers.common['Authorization'] = (!localStorage[storage_key]) ? '' : 'Bearer ' + JSON.parse(localStorage[storage_key]).Auth.token
+        Vue.prototype.http = VueResource;
+        Vue.http = VueResource;
+    }else{
+        Vue.http.options.root = APP_URL
+        Vue.http.headers.common['X-CSRF-TOKEN'] = document.getElementsByName('csrf-token')[0].getAttribute('content')
+        Vue.http.headers.common['Authorization'] = (!localStorage[storage_key]) ? '' : 'Bearer ' + JSON.parse(localStorage[storage_key]).Auth.token
+        //Vue.http.headers.common['Authorization'] = (!sessionStorage[storage_key]) ? '' : 'Bearer ' + JSON.parse(sessionStorage[storage_key]).Auth.token
+    }
 
     Vue.http.interceptors.push((request, next) => {
             next((response) => {

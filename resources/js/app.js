@@ -1,10 +1,13 @@
-import moment from 'moment'
-moment.locale('ja')
-
 import App from './views/App'
 
 window.Vue = require('vue')
 window.Vue.config.productionTip = false
+
+import ui from 'aj-vue-ui/dist/j-ui.common.js'
+Vue.use(ui)
+import moment from 'moment'
+moment.locale('ja')
+
 
 
 var options = {

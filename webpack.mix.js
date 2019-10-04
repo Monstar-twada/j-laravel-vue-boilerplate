@@ -29,6 +29,7 @@ const config = {
             "@views": path.resolve(__dirname, "resources/js", "views"),
             "@layout": path.resolve(__dirname, "resources/js", "layout"),
             "@api": path.resolve(__dirname, "resources/js", "api"),
+            "@core": path.resolve(__dirname, "resources/js", "core"),
         }
     }
 };
@@ -53,7 +54,7 @@ const vendors = [
     "moment",
     "filesize",
     "cleave.js",
-    "axios",
+    "vue-resource",
     "./resources/js/core/index.js",
     "./resources/js/core/api-builder/index.js",
     "./resources/js/core/store-builder/index.js"

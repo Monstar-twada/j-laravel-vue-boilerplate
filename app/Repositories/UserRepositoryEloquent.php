@@ -9,17 +9,21 @@ use App\Entities\User;
 use App\Validators\UserValidator;
 use Prettus\Repository\Helpers\CacheKeys;
 use Illuminate\Support\Str;
+use Prettus\Repository\Contracts\CacheableInterface;
+use Prettus\Repository\Traits\CacheableRepository;
 
 /**
  * Class UserRepositoryEloquent.
  *
  * @package namespace App\Repositories;
  */
-class UserRepositoryEloquent extends BaseRepository implements UserRepository
-{ 
+class UserRepositoryEloquent extends CacheableRepositoryEloquent implements UserRepository, CacheableInterface
+{
+    use CacheableRepository;
+
     public function validator()
     {
-        return SalesmanValidator::class;
+        return UserValidator::class;
     }
 
     /**
@@ -32,7 +36,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         return User::class;
     }
 
-    
+
 
     /**
      * Boot up the repository, pushing criteria
@@ -41,15 +45,14 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     {
         $this->pushCriteria(app(UserCriteria::class));
     }
-    
+
     public function getUserCacheKey($args)
     {
         $method = "auth-user";
         $args = serialize($args);
-        $key = sprintf('%s@%s-%s', get_called_class(), $method,md5($args));
+        $key = sprintf('%s@%s-%s', get_called_class(), $method, md5($args));
         CacheKeys::putKey(get_called_class(), $key);
         return $key;
-
     }
 
     /**
@@ -64,10 +67,10 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         if (!$this->isSkippedCache()) {
             $key = $this->getUserCacheKey(func_get_args());
             $minutes = $this->getCacheMinutes();
-            $result = $this->getCacheRepository()->remember($key, $minutes, function () use ($identifier,$model) {
+            $result = $this->getCacheRepository()->remember($key, $minutes, function () use ($identifier, $model) {
                 return $model->where($model->getAuthIdentifierName(), $identifier)->first();
             });
-        }else{
+        } else {
             $result = $model->where($model->getAuthIdentifierName(), $identifier)->first();
         }
 
@@ -84,9 +87,10 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
      */
     public function retrieveByCredentials(array $credentials)
     {
-        if (empty($credentials) ||
-           (count($credentials) === 1 &&
-            array_key_exists('password', $credentials))) {
+        if (
+            empty($credentials) || (count($credentials) === 1 &&
+                array_key_exists('password', $credentials))
+        ) {
             return null;
         }
         // First we will add each credential element to the query as a where clause.
@@ -95,10 +99,10 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         if (!$this->isSkippedCache()) {
             $key = $this->getUserCacheKey(func_get_args());
             $minutes = $this->getCacheMinutes();
-            $result = $this->getCacheRepository()->remember($key, $minutes,function()use($credentials){
+            $result = $this->getCacheRepository()->remember($key, $minutes, function () use ($credentials) {
                 return $this->findByCredentials($credentials);
             });
-        }else{
+        } else {
             $result = $this->findByCredentials($credentials);
         }
 
@@ -107,7 +111,8 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         return $result;
     }
 
-    public function findByCredentials(array $credentials){
+    public function findByCredentials(array $credentials)
+    {
         $query = $this->model;
         foreach ($credentials as $key => $value) {
             if (Str::contains($key, 'password')) {
@@ -122,5 +127,4 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         }
         return $query->first();
     }
-
 }

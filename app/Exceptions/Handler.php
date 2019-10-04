@@ -3,10 +3,12 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    use ApiHandlerTrait;
     /**
      * A list of the exception types that are not reported.
      *
@@ -44,8 +46,25 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        return parent::render($request, $exception);
+        if ($this->isApiCall($request)) {
+            return $this->getJsonResponseForException($request, $e);
+        }
+
+        return parent::render($request, $e);
+    }
+
+    /**
+     * Determines if request is an api call.
+     *
+     * If the request URI contains '/api/v'.
+     *
+     * @param Request $request
+     * @return bool
+     */
+    protected function isApiCall(Request $request)
+    {
+        return $request->is('api/*');
     }
 }
