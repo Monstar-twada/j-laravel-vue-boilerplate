@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <footer class="layout-footer footer">
 
   </footer>
 </template>
@@ -11,6 +11,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.layout-footer{
+    max-height:2vh;
+
+}
 
 </style>

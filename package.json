@@ -14,7 +14,7 @@
         "@babel/core": "^7.3.4",
         "@babel/plugin-proposal-object-rest-spread": "^7.3.4",
         "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-        "aj-vue-ui": "^0.1.1",
+        "aj-vue-ui": "^0.1.4",
         "autosize": "^4.0.0",
         "bulma": "^0.7.4",
         "cleave.js": "^1.5.2",

@@ -12,7 +12,7 @@
                                                                                          label="メールアドレス"
                                                                                          :maxLength="50"
                                                                                          :enforceMaxLength="true"
-                                                                                         placeholder="例 ) test@cbre.co.jp"
+                                                                                         placeholder="例 ) test@gmail.com"
                                                                                          v-validate="'required|max:50'"
                                                                                          :disabled="Boolean(block)"
                                                                                          :invalid="errors.has('login_id')"
@@ -36,6 +36,9 @@
                         </div>
                     <router-link class="forgot-password-link" :to="{name:'forgot-password'}">
                         パスワードをお忘れの方
+                    </router-link>
+                    <router-link class="registration-form-link" :to="{name:'registration-form'}">
+                        ここに登録
                     </router-link>
             </form>
         </div>
@@ -61,7 +64,7 @@ export default{
             if(is_valid){
                 this.block = this.$block.show();
                 try{
-                    var res = await this.$store.dispatch('Auth/login',{password,email:username,to:{name: 'tenant:home' }})
+                    var res = await this.$store.dispatch('Auth/login',{password,email:username})
                 }catch(error){
                     switch(error.status){
                         case 401:

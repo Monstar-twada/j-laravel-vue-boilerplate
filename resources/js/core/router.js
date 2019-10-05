@@ -59,14 +59,16 @@ router_dependency.install = (Vue,options) => {
             }
 
             Vue.auth.logoutHandler=null;
+            var role = Vue.auth.role();
+            var isAuthenticated = Vue.auth.isAuthenticated()
             //Vue.alert.close('router',to);
             if(to.name != 'sign-in'){
 
             }
 
             if(to.name == 'home'){
-                if( Vue.auth.isAuthenticated()){
-                    next({name:Vue.auth.role()+":home"});
+                if(role && isAuthenticated){
+                    next({name:`${role}:home`});
                     return;
                 }
             }
@@ -121,7 +123,6 @@ router_dependency.install = (Vue,options) => {
                 return;
             }
             next();
-            //Vue.alert.close('router',to)
         }
     )
 

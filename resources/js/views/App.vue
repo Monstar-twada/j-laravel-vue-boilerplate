@@ -1,8 +1,6 @@
 <template>
   <div id="app" class="app-container">
     <router-view class="app-main">
-      <layout-header slot="header"></layout-header>
-      <layout-footer slot="footer"></layout-footer>
     </router-view>
     <notification-container></notification-container>
   </div>
@@ -10,8 +8,6 @@
 
 <script>
 import NotificationContainer from "@views/_partials/NotificationContainer";
-import Header from "@views/_partials/Header";
-import Footer from "@views/_partials/Footer";
 
 export default {
   name: "app-container",
@@ -49,8 +45,6 @@ export default {
   },
   components: {
     "notification-container": NotificationContainer,
-    "layout-header": Header,
-    "layout-footer": Footer
   }
 };
 </script>

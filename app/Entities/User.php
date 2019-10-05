@@ -26,7 +26,7 @@ class User extends Authenticatable implements Transformable, JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name','last_name','department','phone_number', 'email', 'password','role_id'
     ];
 
     /*
@@ -46,6 +46,19 @@ class User extends Authenticatable implements Transformable, JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /*
+    * ACCESSORS
+    */
+    public function getRoleAttribute(){
+        $roles = [
+            1 => 'admin'
+        ];
+        if(array_key_exists($this->role_id,$roles)){
+            return $roles[$this->role_id];
+        }
+        return null;
+    }
 
     /*
     * MUTATORS

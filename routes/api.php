@@ -23,4 +23,16 @@ Route::group(['prefix' => 'users'], function () {
     //Route::post('refresh', $c.'@refresh');
     Route::post('forgot-password', 'Auth\ForgotPasswordController@sendResetLink');
     Route::post('change-password', 'Auth\ResetPasswordController@resetPass');
+    Route::post('register', 'Api\UserController@store');
 });
+
+Route::group(['prefix' => 'users'], function () {
+    $c = 'Api\UserController';
+    Route::post('', $c . '@store');
+    Route::get('', $c . '@index');
+    Route::get('all', $c . '@all');
+    Route::get('{id}', $c . '@show');
+    Route::delete('{id}', $c . '@destroy');
+    Route::put('{id}', $c . '@update');
+});
+Route::group(['middleware' => 'jwt.auth'], function () { });

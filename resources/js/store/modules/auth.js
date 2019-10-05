@@ -60,8 +60,9 @@ const mutations = {
 const actions = {
     logout(context,payload){
         context.commit('remove');
-        var name = payload?payload:'sign-in'
-        Vue.bus.emit('logout',{name})
+        if(payload){
+            Vue.bus.emit('logout',{name:payload})
+        }
     },
     check(context, payload) {
         return new Promise((resolve,reject)=>{
@@ -109,7 +110,11 @@ const actions = {
                 context.commit('set',payload);
                 if(!next){
                     var role = context.getters['role'];
-                    Vue.bus.emit('login',{name:`${role}:login`});
+                    console.log(role);
+                    if(role){
+                        Vue.bus.emit('login',{name:`${role}:login`});
+                    }
+                    Vue.bus.emit('login',{name:`login`});
                 }else{
                     Vue.bus.emit('login',{name:next.name});
                 }

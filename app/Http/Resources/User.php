@@ -14,6 +14,10 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $data = parent::toArray($request);
+        if($this->role == 'admin'){
+            $data['role'] = 'admin';
+        }
+        return $data;
     }
 }
