@@ -27,7 +27,7 @@ By default this boilerplate already offers a laravel-vue implementation of the f
 
 ```bash
 # 1. Clone the repository.
-git clone https://github.com/https://github.com/ajDesamparado13/j-laravel-vue-boilerplate my-new-project
+git clone https://github.com/ajDesamparado13/j-laravel-vue-boilerplate my-new-project
 
 # 2. Enter your newly-cloned folder.
 cd my-new-project
