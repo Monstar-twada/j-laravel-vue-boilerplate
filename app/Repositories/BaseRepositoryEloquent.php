@@ -67,14 +67,14 @@ class BaseRepositoryEloquent extends BaseRepository
      */
     public function paginate($limit = null, $columns = ['*'], $method = "paginate")
     {
-        $total = $this->count();
+        $request = app('request')->request;
+        $total = $request->has('total') ? $request->get('total') : $this->count();
 
         $this->method_scope="listing";
 
-        $request = app('request')->query();
         $page = 1;
-        if(isset($request['page'])){
-            $page = $request['page'];
+        if($request->has('page')){
+            $page = $request->get('page');
         }
 
         $limit = is_null($limit) ? config('repository.pagination.limit', 15) : $limit;
@@ -83,7 +83,7 @@ class BaseRepositoryEloquent extends BaseRepository
         if($end > $total){
             $end = $total;
         }
-        if(!isset($request['search']) && !isset($request['sort'])){
+        if(!$request->has('search') && !$request->has('sort')){
                 $this->scopeQuery(function($query) use($start,$end){
                     return $query->whereBetween($this->primaryKey,[$start,$end]);
                     //return $query->where('id','>=',$start)->where('id','<=',$end);
@@ -110,6 +110,7 @@ class BaseRepositoryEloquent extends BaseRepository
 
         return $this->parserResult($paginator);
     }
+
     /**
      * Find data by id
      *
