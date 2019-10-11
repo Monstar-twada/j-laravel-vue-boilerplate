@@ -1,20 +1,20 @@
-import _actions from './actions'
 import _getters from './getters'
 import _mutations from './mutations'
 import _state from './state'
 
-export const base = {
+const base = {
     actions : _actions,
     getters : _getters,
     mutations : _mutations,
     state   : _state,
 }
 
-export function assign(part,key){
+export function assign(part,key,options={}){
     var basis = base[key];
-    for(let p in basis){
+    var obj = typeof basis == 'function' ? basis(options) : basis;
+    for(let p in obj){
         if(!part[p]){
-            var prop = basis[p];
+            var prop = obj[p];
             part[p] = prop;
         }
     }
