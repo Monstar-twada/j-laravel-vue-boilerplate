@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Providers\UserProvider;
+namespace App\Packages\Providers\UserProvider;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Illuminate\Support\Str;
 use Illuminate\Contracts\Auth\UserProvider;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
-use App;
 
 class RepositoryUserProvider implements UserProvider
 {
