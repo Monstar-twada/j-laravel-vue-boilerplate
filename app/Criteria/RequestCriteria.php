@@ -2,12 +2,11 @@
 namespace App\Criteria;
 
 use Prettus\Repository\Criteria\RequestCriteria as BaseRequestCriteria;
-use Illuminate\Http\Request;
 use Prettus\Repository\Contracts\CriteriaInterface;
-use Prettus\Repository\Contracts\RepositoryInterface;
-use Auth;
+use JWTAuth;
 use Carbon\Carbon;
 use Collator;
+use Arr;
 
 /**
  * Class RequestCriteria
@@ -20,11 +19,12 @@ class RequestCriteria extends BaseRequestCriteria implements CriteriaInterface
      */
     protected $request;
 
-    protected $search;
+    protected $search = [];
 
-    protected $sort;
 
     protected $fieldSearchable = [];
+
+    protected $sort = [];
 
     protected $fields = [];
 
@@ -32,24 +32,17 @@ class RequestCriteria extends BaseRequestCriteria implements CriteriaInterface
     {
         $request = app('request');
         $this->request = $request;
+
         if($request->has('search')){
             $search = $request->input('search');
-            $this->search = is_array($search) ? $search : $this->parserSearchData($search);
+            $result = is_array($search) ? $search : $this->parserSearchData($search);
+            $this->search = $result;
+            $this->fields = Arr::only($result,$this->fieldSearchable);
         }
 
         if($request->has('sort')){
             $sort = $request->input('sort');
             $this->sort = is_array($sort) ? $sort : $this->parserSearchData($sort);
-        }
-
-        $search = $this->search;
-        if(is_array($search)){
-            foreach($this->fieldSearchable as $key)
-            {
-                if(isset($search[$key])){
-                    $this->fields[$key] = $search[$key];
-                }
-            }
         }
         return $this;
     }
@@ -69,7 +62,7 @@ class RequestCriteria extends BaseRequestCriteria implements CriteriaInterface
      */
     public function getUser()
     {
-        return Auth::user();
+        return JWTAuth::parseToken()->toUser();
     }
 
     public function getNumberOnly($val)
