@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Repositories\DummyClassRepository;
+use App\Http\Resources\DummyClass as DummyClassResource;
+use App\Criteria\DummyClassCriteria;
+use App\Http\Requests\DummyClassRequest;
+
+class DummyClassController extends ApiController
+{
+    public function __construct(DummyClassRepository $repository,DummyClassRequest $request)
+    {
+        parent::__construct($request);
+        $this->repository = $repository;
+        $this->transformer = new DummyClassResource(null);
+    }
+}
+
