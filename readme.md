@@ -27,7 +27,7 @@ By default this boilerplate already offers a laravel-vue implementation of the f
 
 ```bash
 # 1. Clone the repository.
-git clone https://github.com/https://github.com/ajDesamparado13/j-laravel-vue-boilerplate my-new-project
+git clone https://github.com/ajDesamparado13/j-laravel-vue-boilerplate my-new-project
 
 # 2. Enter your newly-cloned folder.
 cd my-new-project
@@ -38,7 +38,10 @@ npm install
 # https://getcomposer.org/
 composer install
 
-# 4. Read the documentation linked below for "Setup and development".
+# 4 Configure environment variables on .env
+cp .env.example .env
+
+# 5. Read the documentation linked below for "Setup and development".
 ```
 
 ## Documentation
