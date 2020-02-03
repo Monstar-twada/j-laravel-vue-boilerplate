@@ -64,12 +64,12 @@ trait UserTouch
         $created_by_column = $this->getCreatedByColumn();
 
         if (! is_null($updated_by_column) && ! $this->isDirty($updated_by_column)) {
-            $this->setUpdatedBy($time);
+            $this->setUpdatedBy($user_id);
         }
 
         if (! $this->exists && ! is_null($created_by_column) &&
             ! $this->isDirty($created_by_column)) {
-            $this->setCreatedBy($time);
+            $this->setCreatedBy($user_id);
         }
     }
 
