@@ -36,4 +36,4 @@ Route::group(['middleware' => 'api'],function(){
         Route::put('{id}', $c . '@update');
     });
     Route::group(['middleware' => 'jwt.auth'], function () { });
-})
+});

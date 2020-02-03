@@ -1,0 +1,91 @@
+// ================================================
+// TABLE OF CONTENTS
+// ================================================
+// 1. COLORS VARIABLE
+// 2. FONT VARIABLE
+// 3. GENERAL GAP AND DEVICE SIZES
+// 4. BREAKPOINT VARIABLE
+// ================================================
+
+// ================================================
+// Colors
+// ================================================
+$primary: #006a4d;
+$danger: #f44336;
+$accent: #69be28;
+$error: $danger;
+
+// ================================================
+// LAYOUT BACKGROuND COLORS
+// ================================================
+$sidebar-bg: #e4e3de;
+$sidebar-item-bg: $primary;
+$header-bg: #e4e3de;
+$footer-bg: $primary;
+
+
+// LAYOUT MAX SIZES
+$sidebar-max-width: 15vw;
+$header-max-height: 10vh;
+
+// LAYOUT MIN SIZES
+$sidebar-min-width: 15vw;
+$sidebar-min-height: calc( 100vh - #{ $header-max-height });
+
+// ================================================
+// Font sizes
+// ================================================
+$body-size: 81.25% !default;
+$custom-font: "游ゴシック体","Yu Gothic","Yu-Gothic", "YuGothic", "YuGothic-Regular", "ヒラギノ角ゴ Pro",
+    "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "MS Pゴシック", "MS PGothic", sans-serif, FontAwesome;
+
+$body-family: $custom-font;
+$family-sans-serif: $custom-font;
+
+/* 游ゴシック体 */
+
+$size-1: rem-calc(36px) !default;
+$size-2: rem-calc(34px) !default;
+$size-3: rem-calc(27px) !default;
+$size-4: rem-calc(24px) !default;
+$size-5: rem-calc(20px) !default;
+$size-6: rem-calc(16px) !default;
+$size-7: rem-calc(14px) !default;
+
+
+// ================================================
+// Icon sizes
+// ================================================
+$icon-dimensions : 1.5rem;
+$icon-dimensions-small : 1.25rem;
+$icon-dimensions-medium : 2rem;
+$icon-dimensions-large : 3rem;
+// ================================================
+// GENERAL GAP AND DEVICE SIZE
+// ================================================
+$gap:32px !default;
+$mobile: 320px;
+$tablet: 769px;
+$desktop: 960 + (2 * $gap) !default;
+$widescreen: 1152 + (2 * $gap) !default;
+$fullhd: 1920 + (2 * $gap) !default;
+$quadhd: 2560 + (2 * $gap) !default;
+$uhd: 3840 + (2 * $gap) !default;
+
+// ================================================
+// BREAKPOINTS
+// ================================================
+$bp-palm: $mobile !default;
+$bp-palm-wide: 414px !default;
+$bp-hands: 600px !default;
+$bp-hands-wide: 850px !default;
+$bp-desktop:$desktop !default;
+$bp-widescreen: $widescreen !default;
+$bp-fullhd:$fullhd !default;
+$bp-quadhd:$fullhd !default;
+$bp-uhd:$fullhd !default;
+
+
+$modal-z: 999 !default;
+
+@import "node_modules/bulma/bulma"
